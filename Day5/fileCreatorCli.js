@@ -20,6 +20,7 @@ const fileCreation = () =>{
                 }else{
                     console.log("success");
                 }
+                fc.close();
             });
         })
     })
