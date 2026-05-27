@@ -1,5 +1,8 @@
 {
   "type": "module",
+  "scripts": {
+    "dev" : "node --env-file=.env --watch express8.js"
+  },
   "dependencies": {
     "express": "^5.2.1",
     "zod": "^4.4.3"
