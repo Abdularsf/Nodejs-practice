@@ -6,7 +6,7 @@ const wr = readline.createInterface({
     output: process.stdout,
 })
 
-const api ="629abb09ca3ad9384ce31fef8eff34cf";
+const api = process.env.OPENWEATHER_API_KEY;
 const BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
 
 const city = await wr.question("Enter the city name: ");
