@@ -32,3 +32,18 @@
 // emitter.emit("user-logout", "ARSF");
 
 // console.log(obj);
+
+const http = require("http");
+
+const server = http.createServer((req,res) => {
+	if(req.url == "/"){
+        res.write("hello")
+        res.end()
+    }
+});
+
+const port = 3001
+
+server.listen(port,() =>{
+    console.log("running");
+})
