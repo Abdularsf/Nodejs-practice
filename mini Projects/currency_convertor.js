@@ -8,7 +8,7 @@ const cr = readline.createInterface({
     output: process.stdout,
 })
 
-const api = "3e169005f7716cd5f35fc0e3";
+const api = process.env.CURRENCY_API
 const url = `https://v6.exchangerate-api.com/v6/${api}/latest/USD`;
 
 const convertCurrency = (amount,rate) =>{
