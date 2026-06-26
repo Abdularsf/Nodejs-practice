@@ -47,3 +47,41 @@
 // server.listen(port,() =>{
 //     console.log("running");
 // })
+
+import readline from "readline"
+
+const rl = readline.createInterface({
+    input:process.stdin,
+    output:process.stdout
+})
+
+const showMenu = () =>{
+    console.log("1) Add a Task");
+    console.log("2) View the Task");
+    console.log("3) End");
+    rl.question("Choose an option  ",handleInput);
+}
+
+const todos = [];
+
+const handleInput = (option) =>{
+    if(option === "1"){
+        rl.question("Enter the task : ",(task) =>{
+            todos.push(task);
+            showMenu();
+        })
+    }else if(option === "2"){
+        todos.forEach((tasks,index) =>{
+            console.log(`${index+1}. ${tasks}`);
+        })
+        showMenu();
+    }else if(option === "3"){
+        console.log("end");
+    }else{
+        showMenu()
+    }
+}
+
+showMenu();
+
+
