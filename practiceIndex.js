@@ -162,12 +162,3 @@ function fsReadFilePromisified(file,encoding){
         })
     })
 }
-
-async function main(){
-    let data = await fsReadFilePromisified()
-}
-fs.promises.writeFile(filePath,"We got the promises","utf-8").then(() =>{
-    console.log("file created");
-}).catch((err) =>{
-    console.log(err);
-})
