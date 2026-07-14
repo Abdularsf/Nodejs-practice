@@ -150,15 +150,15 @@
 //         )
 //     });
 // })
-import fs from "fs";
-function fsReadFilePromisified(file,encoding){
-    return new Promise((resolve,reject) =>{
-        fs.readFile(file,encoding,(data,err) =>{
-            if(err){
-                reject(err);
-            }else{
-                resolve(data);
-            }
-        })
-    })
-}
+// import fs from "fs";
+// function fsReadFilePromisified(file,encoding){
+//     return new Promise((resolve,reject) =>{
+//         fs.readFile(file,encoding,(data,err) =>{
+//             if(err){
+//                 reject(err);
+//             }else{
+//                 resolve(data);
+//             }
+//         })
+//     })
+// }
