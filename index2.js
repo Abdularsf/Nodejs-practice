@@ -18,11 +18,20 @@ const app = express()
 //   console.log('Server is running on http://localhost:3000')
 // })
 
-app.get("/sum", (req,res) =>{
-  const a = parseInt(req.query.a);
-  const b = parseInt(req.query.b);
+// app.get("/sum", (req,res) =>{
+//   const a = parseInt(req.query.a);
+//   const b = parseInt(req.query.b);
+//   let sum = a+b;
+//   res.send(sum)
+// })
+
+app.get("/sum/:firstNumber/:secondNumber", (req,res) =>{
+  const a = parseInt(req.params.firstNumber);
+  const b = parseInt(req.params.secondNumber);
   let sum = a+b;
-  res.send(sum)
+  res.json({
+    ans : sum
+  })
 })
 
 app.listen(3000);
