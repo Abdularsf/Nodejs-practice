@@ -34,4 +34,13 @@ app.get("/sum/:firstNumber/:secondNumber", (req,res) =>{
   })
 })
 
+app.get("/multiply/:firstNumber/:secondNumber" , (req,res) =>{
+  const a = parseInt(req.params.firstNumber);
+  const b = parseInt(req.params.secondNumber);
+  let product = a * b;
+  res.json({
+    ans: product
+  })
+})
+
 app.listen(3000);
