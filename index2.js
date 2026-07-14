@@ -25,9 +25,15 @@ const app = express()
 //   res.send(sum)
 // })
 
-app.get("/sum/:firstNumber/:secondNumber", (req,res) =>{
-  const a = parseInt(req.params.firstNumber);
-  const b = parseInt(req.params.secondNumber);
+app.use(express.json);
+
+app.get("/", (req,res) =>{
+ res.sendFile("C:/Code/NodeJs/index2.html");
+})
+
+app.post("/sum", (req,res) =>{
+  const a = parseInt(req.body.a);
+  const b = parseInt(req.body.a);
   let sum = a+b;
   res.json({
     ans : sum
