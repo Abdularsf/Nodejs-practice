@@ -27,27 +27,44 @@ const app = express()
 
 app.use(express.json());
 
+let reqCount = 0;
+
+function increaseCount(req,res,next){
+  reqCount++;
+  console.log(reqCount);
+  next();
+}
+
+app.use(increaseCount);
+
 app.get("/", (req,res) =>{
  res.sendFile("C:/Code/NodeJs/index2.html");
 })
 
-app.post("/sum", (req,res) =>{
+// app.post("/sum", (req,res) =>{
+//   const a = parseInt(req.body.a);
+//   const b = parseInt(req.body.b);
+//   let sum = a+b;
+//   res.json({
+//     ans : sum
+//   })
+// })
+
+
+app.post("/multiply" , (req,res) =>{
   const a = parseInt(req.body.a);
   const b = parseInt(req.body.b);
-  let sum = a+b;
-  res.json({
-    ans : sum
-  })
-})
-
-
-app.get("/multiply/:firstNumber/:secondNumber" , (req,res) =>{
-  const a = parseInt(req.params.firstNumber);
-  const b = parseInt(req.params.secondNumber);
   let product = a * b;
   res.json({
     ans: product
   })
+})
+
+app.get("/requestCount",(req,res) =>{
+  res.send(reqCount);
+})
+app.get("/status",(req,res) =>{
+  res.send("up");
 })
 
 app.listen(3000);

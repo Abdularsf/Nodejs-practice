@@ -15,10 +15,10 @@
                 const a = document.getElementById("first").value;
                 const b = document.getElementById("second").value;
 
-                // document.getElementById("response").innerHTML =
-                //   parseInt(a) + parseInt(b);
+                document.getElementById("response").innerHTML =
+                  parseInt(a) + parseInt(b);
 
-                const res = await fetch(`http://localhost:3000/sum/`, {
+                const res = await fetch(`http://localhost:3000/multiply/`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
