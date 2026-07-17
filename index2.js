@@ -35,6 +35,10 @@ function increaseCount(req,res,next){
   next();
 }
 
+app.get("/requestCount",(req,res) =>{
+  res.send(reqCount);
+})
+
 app.use(increaseCount);
 
 app.get("/", (req,res) =>{
@@ -60,9 +64,6 @@ app.post("/multiply" , (req,res) =>{
   })
 })
 
-app.get("/requestCount",(req,res) =>{
-  res.send(reqCount);
-})
 app.get("/status",(req,res) =>{
   res.send("up");
 })
