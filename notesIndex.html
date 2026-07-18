@@ -6,19 +6,48 @@
 
 <body>
     <div style="display: flex; justify-content: space-between; padding: 0px 100px;">
-        <div>
+        <div id="notes">
             Loading...
         </div>
 
         <div>
-            <input type="text" />
-            <button>Create new note</button>
+            <input type="text" id="userNotes" />
+            <button onclick="addTodo()">Create new note</button>
         </div>
     </div>
     <script>
+
+        async function addTodo() {
+            await axios.post("http://localhost:3003/notes", {
+                notes: document.getElementById("userNotes").value
+            })
+
+            const noteNode = document.createElement("div");
+
+            noteNode.innerHTML = document.getElementById("userNotes").value;
+            noteNode.setAttribute("style", "border: 2px solid black; padding: 10px;");
+            document.getElementById("notes").appendChild(noteNode);
+
+            // make the input box empty again
+            document.getElementById("userNotes").value = "";
+        }
+
         async function getTodos() {
-            const res = axios.get
-            const data = await res.json();
+            const response = await axios.get("http://localhost:3003/notes");
+
+            const notes = response.data.notes;
+
+            document.getElementById("notes").innerHTML = "";
+
+            for (let i = 0; i < notes.length; i++) {
+                const noteNote = document.createElement("div");
+                noteNote.innerHTML = notes[i];
+                noteNote.setAttribute(
+                    "style",
+                    "border: 2px solid black; padding: 10px;"
+                );
+                document.getElementById("notes").appendChild(noteNote);
+            }
         }
         getTodos();
     </script>

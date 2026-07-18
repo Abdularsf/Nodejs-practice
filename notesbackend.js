@@ -4,6 +4,8 @@ const app = express();
 
 const notes = [];
 
+app.use(express.json());
+
 app.post("/notes",(req,res) =>{
     const note = req.body.note;
     notes.push(note);
