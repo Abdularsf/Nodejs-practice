@@ -1,0 +1,27 @@
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.18.1/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div style="display: flex; justify-content: space-between; padding: 0px 100px;">
+        <div>
+            Loading...
+        </div>
+
+        <div>
+            <input type="text" />
+            <button>Create new note</button>
+        </div>
+    </div>
+    <script>
+        async function getTodos() {
+            const res = axios.get
+            const data = await res.json();
+        }
+        getTodos();
+    </script>
+</body>
+
+</html>
