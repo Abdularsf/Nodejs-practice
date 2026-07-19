@@ -10,7 +10,7 @@ const users = [{
 }];
 
 app.post("/signup", function (req, res) {
-    const username = req.body.username;   // harkirat
+    const username = req.body.username; 
     const password = req.body.password;
 
     const userExists = users.find(user => user.username === username);
@@ -30,6 +30,20 @@ app.post("/signup", function (req, res) {
         message: "Signup successful"
     });
 });
+
+app.post("/signin", function (req, res) {
+    const username = req.body.username;  
+    const password = req.body.password;
+
+    const userExists = users.find(user => user.username === username && user.password === password);
+
+    if (userExists) {
+        return res.status(403).json({
+            message: "Incorrect Credential"
+        });
+        return;
+    }
+})
 
 app.use(express.json());
 
