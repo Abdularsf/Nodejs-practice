@@ -1,5 +1,5 @@
 import express from 'express';
-
+import jwt from "jsonwebtoken"
 const app = express();
 
 const notes = [];
@@ -43,11 +43,27 @@ app.post("/signin", function (req, res) {
         });
         return;
     }
+
+    const token = jwt.sign({
+        username : username
+    },"arsf123")
 })
 
 app.use(express.json());
 
 app.post("/notes", (req, res) => {
+    const token = req.headers.token;
+
+    if(!token){
+        res.status(403).json({
+            message : "you are not logged in"
+        });
+        return;
+    }
+
+    const decoded = jwt.verify(token,"arsf123");
+    
+
     const note = req.body.note;
     notes.push(note);
     res.json({
