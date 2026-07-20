@@ -10,7 +10,7 @@ const users = [{
 }];
 
 app.post("/signup", function (req, res) {
-    const username = req.body.username; 
+    const username = req.body.username;
     const password = req.body.password;
 
     const userExists = users.find(user => user.username === username);
@@ -32,7 +32,7 @@ app.post("/signup", function (req, res) {
 });
 
 app.post("/signin", function (req, res) {
-    const username = req.body.username;  
+    const username = req.body.username;
     const password = req.body.password;
 
     const userExists = users.find(user => user.username === username && user.password === password);
@@ -45,8 +45,8 @@ app.post("/signin", function (req, res) {
     }
 
     const token = jwt.sign({
-        username : username
-    },"arsf123")
+        username: username
+    }, "arsf123")
 })
 
 app.use(express.json());
@@ -54,18 +54,25 @@ app.use(express.json());
 app.post("/notes", (req, res) => {
     const token = req.headers.token;
 
-    if(!token){
+    if (!token) {
         res.status(403).json({
-            message : "you are not logged in"
+            message: "you are not logged in"
         });
         return;
     }
 
-    const decoded = jwt.verify(token,"arsf123");
-    
+    const decoded = jwt.verify(token, "arsf123");
+    const username = decoded.username;
+
+    if (!username) {
+        res.status(403).json({
+            message: "malformed token"
+        });
+        return;
+    }
 
     const note = req.body.note;
-    notes.push(note);
+    notes.push({note,username});
     res.json({
         message: "done"
     })
