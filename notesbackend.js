@@ -37,7 +37,7 @@ app.post("/signin", function (req, res) {
 
     const userExists = users.find(user => user.username === username && user.password === password);
 
-    if (userExists) {
+    if (!userExists) {
         return res.status(403).json({
             message: "Incorrect Credential"
         });
@@ -79,8 +79,29 @@ app.post("/notes", (req, res) => {
 })
 
 app.get("/notes", (req, res) => {
+
+    const token = req.headers.token;
+
+    if (!token) {
+        res.status(403).json({
+            message: "you are not logged in"
+        });
+        return;
+    }
+
+    const decoded = jwt.verify(token, "arsf123");
+    const username = decoded.username;
+
+    if (!username) {
+        res.status(403).json({
+            message: "malformed token"
+        });
+        return;
+    }
+
+    const userNotes = notes.filter(note => note.username === username);
     res.json({
-        notes
+        notes : userNote
     })
 })
 
