@@ -19,9 +19,9 @@
 
         async function addTodo() {
             await axios.post("http://localhost:3003/notes", {
-                notes: document.getElementById("userNotes").value
+                note: document.getElementById("userNotes").value
             },{
-                header :{
+                headers :{
                     token : localStorage.getItem("token")
                 }
             })
@@ -38,7 +38,7 @@
 
         async function getTodos() {
             const response = await axios.get("http://localhost:3003/notes",{
-                header :{
+                headers :{
                     token : localStorage.getItem("token")
                 }
             });

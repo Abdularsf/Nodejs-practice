@@ -1,6 +1,7 @@
 import express from 'express';
 import jwt from "jsonwebtoken"
 const app = express();
+app.use(express.json());
 
 const notes = [];
 
@@ -44,12 +45,19 @@ app.post("/signin", function (req, res) {
         return;
     }
 
-    const token = jwt.sign({
-        username: username
-    }, "arsf123")
+    const token = jwt.sign(
+        {
+            username: username
+        },
+        "arsf123"
+    );
+
+    res.json({
+        token: token
+    });
 })
 
-app.use(express.json());
+
 
 app.post("/notes", (req, res) => {
     const token = req.headers.token;
@@ -72,7 +80,7 @@ app.post("/notes", (req, res) => {
     }
 
     const note = req.body.note;
-    notes.push({note,username});
+    notes.push({ note, username });
     res.json({
         message: "done"
     })
@@ -101,12 +109,18 @@ app.get("/notes", (req, res) => {
 
     const userNotes = notes.filter(note => note.username === username);
     res.json({
-        notes : userNote
+        notes: userNotes
     })
 })
 
 app.get("/", (req, res) => {
     res.sendFile("C:/Code/NodeJs/notesIndex.html")
+})
+app.get("/signup", (req, res) => {
+    res.sendFile("C:/Code/NodeJs/signup.html")
+})
+app.get("/signin", (req, res) => {
+    res.sendFile("C:/Code/NodeJs/signin.html")
 })
 
 app.listen(3003)
