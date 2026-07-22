@@ -1,5 +1,7 @@
 import express from 'express';
 import jwt from "jsonwebtoken"
+import { authMiddleWare } from './middleware';
+
 const app = express();
 app.use(express.json());
 
@@ -37,21 +39,21 @@ app.post("/signin", function (req, res) {
     const password = req.body.password;
 
     const userExists = users.find(user => user.username === username && user.password === password);
-
+    
     if (!userExists) {
         return res.status(403).json({
             message: "Incorrect Credential"
         });
         return;
     }
-
+    
     const token = jwt.sign(
         {
             username: username
         },
         "arsf123"
     );
-
+    
     res.json({
         token: token
     });
@@ -59,26 +61,8 @@ app.post("/signin", function (req, res) {
 
 
 
-app.post("/notes", (req, res) => {
-    const token = req.headers.token;
-
-    if (!token) {
-        res.status(403).json({
-            message: "you are not logged in"
-        });
-        return;
-    }
-
-    const decoded = jwt.verify(token, "arsf123");
-    const username = decoded.username;
-
-    if (!username) {
-        res.status(403).json({
-            message: "malformed token"
-        });
-        return;
-    }
-
+app.post("/notes",authMiddleWare, (req, res) => {
+    const username = req.username;
     const note = req.body.note;
     notes.push({ note, username });
     res.json({
@@ -86,27 +70,8 @@ app.post("/notes", (req, res) => {
     })
 })
 
-app.get("/notes", (req, res) => {
-
-    const token = req.headers.token;
-
-    if (!token) {
-        res.status(403).json({
-            message: "you are not logged in"
-        });
-        return;
-    }
-
-    const decoded = jwt.verify(token, "arsf123");
-    const username = decoded.username;
-
-    if (!username) {
-        res.status(403).json({
-            message: "malformed token"
-        });
-        return;
-    }
-
+app.get("/notes",authMiddleWare, (req, res) => {
+    const username = req.username;
     const userNotes = notes.filter(note => note.username === username);
     res.json({
         notes: userNotes

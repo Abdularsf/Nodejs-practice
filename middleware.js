@@ -17,4 +17,10 @@ function authMiddleWare(req, res, next) {
         });
         return;
     }
+
+    req.username = username;
+}
+
+module.exports = {
+    authMiddleWare
 }
