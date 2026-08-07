@@ -10,14 +10,36 @@
     <input type="text" id="secondNumber" placeholder="Enter the number">
     <button onclick="add()">add</button>
     <button>subtract</button>
-    <button>divide</button>
-    <button>multiplication</button>
+    <button onclick="divide()">divide</button>
+    <button onclick="multiply()">multiplication</button>
+    <div id="res"></div>
     <script>
-        let elemOne = document.getElementById('firstNumber');
-        let elemtwo = document.getElementById('secondNumber');
+        let result = document.getElementById("res");
+        
+        const add = async () =>{
+            let elemOne = document.getElementById('firstNumber').value;
+            let elemtwo = document.getElementById('secondNumber').value;
+            let response = await fetch(`http://localhost:3006/sum?a=${elemOne}&b=${elemtwo}`);
+            console.log(response);
+            let sumres = await response.json();
+            console.log(sumres);
+            result.innerHTML = sumres.sum;
+        }
 
-        const add = () =>{
-            let addRes = fetch()
+        const multiply = async () =>{
+            let elemOne = document.getElementById('firstNumber').value;
+            let elemtwo = document.getElementById('secondNumber').value;
+            let response = await fetch(`http://localhost:3006/multiply?a=${elemOne}&b=${elemtwo}`);
+            let res = await response.json();
+            result.innerHTML = res.multi
+        }
+
+        const divide = async () => {
+            let elemOne = document.getElementById('firstNumber').value;
+            let elemtwo = document.getElementById('secondNumber').value;
+            let response = await fetch(`http://localhost:3006/divide?a=${elemOne}&b=${elemtwo}`);
+            let res = await response.json();
+            result.innerHTML = res.divisible;
         }
     </script>
 </body>
