@@ -16,10 +16,29 @@
     <script>
         let result = document.getElementById("res");
         
+        // const add = async () =>{
+        //     let elemOne = document.getElementById('firstNumber').value;
+        //     let elemtwo = document.getElementById('secondNumber').value;
+        //     let response = await fetch(`http://localhost:3006/sum?a=${elemOne}&b=${elemtwo}`);
+        //     console.log(response);
+        //     let sumres = await response.json();
+        //     console.log(sumres);
+        //     result.innerHTML = sumres.sum;
+        // }
         const add = async () =>{
             let elemOne = document.getElementById('firstNumber').value;
             let elemtwo = document.getElementById('secondNumber').value;
-            let response = await fetch(`http://localhost:3006/sum?a=${elemOne}&b=${elemtwo}`);
+            let response = await fetch(`http://localhost:3006/sum`,{
+                method : 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            },{
+                body : JSON.stringify({
+                    a: elemOne,
+                    b: elemtwo
+                })
+            });
             console.log(response);
             let sumres = await response.json();
             console.log(sumres);
