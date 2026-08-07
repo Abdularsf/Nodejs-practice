@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <input type="text" id="studentName" placeholder="Enter Your name">
+        <input type="text" id="math" placeholder="Enter you Math marks">
+        <input type="text" id="physics" placeholder="Enter you physics marks">
+        <input type="text" id="chem" placeholder="Enter you chem marks">
+        <button onclick="calculateMarks()">Calulate</button>
+        <button>Clear</button>
+    </div>
+    <script>
+        let calculateMarks = async () => {
+            let mathMarks = document.getElementById("math").value;
+            let physicsMarks = document.getElementById("physics").value;
+            let chemMarks = document.getElementById("chem").value;
+            let studentName = document.getElementById("studentName").value;
+            let result = await fetch("http://localhost:3008/calculatingMarks", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    mathMarks,
+                    physicsMarks,
+                    chemMarks,
+                    studentName
+                })
+            });
+
+            
+        }
+    </script>
+</body>
+
+</html>
