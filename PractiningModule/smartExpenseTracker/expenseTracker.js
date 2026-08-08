@@ -56,18 +56,52 @@ app.post("/expenses", authMiddleWare, (req, res) => {
     const username = req.username;
 
     expenses.push({
-        title,amount,category,username
+        id: expenses.length + 1, title, amount, category, username
     })
 
     res.json({
-        message : "done"
+        message: "done"
     })
 })
 
-app.get("/expenses",authMiddleWare,(req,res) =>{
+app.get("/expenses", authMiddleWare, (req, res) => {
     const username = req.username;
     const userExpense = expenses.filter(expense => expense.username == username);
     res.json({
         userExpense
     })
 })
+
+app.delete("/expenses/:id", authMiddleWare, (req, res) => {
+    const id = Number(req.params.id);
+    const username = req.username;
+    const index = expenses.findIndex(
+        expense => expense.id === id && expense.username === username
+    );
+    if (index === -1) {
+        return res.status(404).json({
+            message: "Expense not found"
+        });
+    }
+    expenses.splice(index, 1);
+
+    res.json({
+        message: "Expense deleted successfully"
+    });
+})
+
+app.get("/expenses/total", authMiddleWare, (req, res) => {
+    const username = req.username;
+
+    const userExpenses = expenses.filter(
+        expense => expense.username === username
+    );
+
+    const total = userExpenses.reduce(
+        (sum, expense) => sum + expense.amount, 0
+    );
+
+    res.json({
+        total
+    });
+});
