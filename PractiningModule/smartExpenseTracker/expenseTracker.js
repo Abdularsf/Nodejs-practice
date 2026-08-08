@@ -1,5 +1,6 @@
 import express from "express"
 import jwt from "jsonwebtoken"
+import { authMiddleWare } from "../../middleware";
 
 const app = express();
 app.use(express.json());
@@ -8,6 +9,8 @@ const users = [{
     username: "abdul",
     password: "12345",
 }]
+
+const expenses = []
 
 app.post("/signup", (req, res) => {
     const username = req.body.username;
@@ -43,5 +46,28 @@ app.post("/signin", (req, res) => {
 
     res.json({
         token
+    })
+})
+
+app.post("/expenses", authMiddleWare, (req, res) => {
+    const title = req.body.title
+    const amount = req.body.amount
+    const category = req.body.category
+    const username = req.username;
+
+    expenses.push({
+        title,amount,category,username
+    })
+
+    res.json({
+        message : "done"
+    })
+})
+
+app.get("/expenses",authMiddleWare,(req,res) =>{
+    const username = req.username;
+    const userExpense = expenses.filter(expense => expense.username == username);
+    res.json({
+        userExpense
     })
 })
